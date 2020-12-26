@@ -31,7 +31,7 @@ public class UserController {
     public String loadUserTodos(@PathVariable("id") Integer id,Model model){
         List<Todo> todoList=todoRepository.findByTodoUserUserId(id);
         model.addAttribute("todoList",todoList);
-        return "userTodos";
+        return "usertodos";
     }
     @GetMapping(path ="/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id){
