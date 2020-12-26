@@ -49,9 +49,8 @@
         <div class="form-group">
             <div class="col-md-4 inputGroupContainer">
                 <div class="input-group">
-                    <label for="status" class="col-md-4 control-label">Status</label>
-                    <select class="form-select" id="status">
-                        <option selected>Choose...</option>
+                    <label for="status" class="col-md-4 control-label">Role</label>
+                    <select class="form-select" id="status" th:field="*{role}">
                         <option value="ROLE_USER">ROLE_USER</option>
                         <option value="ROLE_ADMIN">ROLE_ADMIN</option>
                     </select>
@@ -59,7 +58,10 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-primary col-2" type="submit">Save Todo</button>
+        <div class="form-group my-2">
+            <button class="btn btn-primary col-2" type="submit">Add User</button>
+        </div>
+
 
     </form>
 
