@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container-fluid">
+    <a class="navbar-brand" href="#"> Welcome <span sec:authentication="name"></span></a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" href="/todos">Todos</a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                <a class="nav-link active" aria-current="Users" href="/users">Users</a>
+            </li>
+            <li class="nav-item">
+                <a active class="nav-link active text-danger" href="/logout">LOGOUT</a>
+            </li>
+        </ul>
+
+
+    </div>
+</div>
+</nav>
+<div th:switch="${todoList.size()}">
+    <h2 th:case="0">No Todos Yet</h2>
+    <div th:case ="*">
+        <div class="container my-2">
+            <table border==1 class="table table-striped">
+                <thead>
+                <tr>
+                    <th >Todo Title</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+
+                    <th scope="col" sec:authorize="hasRole('ROLE_USER')">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="todo : ${todoList}">
+                    <td th:text="${todo.title}"></td>
+                    <td th:text="${todo.dueDate}"></td>
+                    <td th:text="${todo.status.getDescription()}"></td>
+                    <td>
+                        <div sec:authorize="hasRole('ROLE_USER')" class="btn-group">
+                            <a th:href="@{todos/edit/{id}(id=${todo.todoId})}"  class="btn btn-primary">Edit</a>
+                            <a th:href="@{todos/delete/{id}(id=${todo.todoId})}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div align="center"  class="container" sec:authorize="hasRole('ROLE_USER')">
+        <a th:href="@{todos/newTodo}" class="btn btn-secondary">Add New Todo</a>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>
